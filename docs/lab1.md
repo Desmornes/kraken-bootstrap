@@ -1,0 +1,3 @@
+1. **Cache Docker :** le Dockerfile copie `requirements.txt` et installe les dépendances avant de copier le code Python. Une modification de `app/main.py` ne relance donc plus `pip install`, comme confirmé par `CACHED`.
+2. **Optimisation :** l'utilisation de `python:3.12-slim` et de `.dockerignore` réduit les fichiers inutiles et la taille de l'image. La taille passe de 2,68 Go à 602 Mo selon `docker images`, soit environ 77,5 % de réduction.
+3. **Sécurité et persistance :** le job s'exécute avec un utilisateur non-root (UID 1000). La variable `OUTPUT_DIR` permet de configurer la sortie, et un volume Docker conserve `stations.parquet` sur la machine hôte.
