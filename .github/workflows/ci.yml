@@ -6,9 +6,25 @@ on:
   pull_request:
 
 jobs:
-  hello:
+  lint-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Afficher le SHA du commit
-        run: 'echo "SHA du commit : ${{ github.sha }}"'
+      - name: Recuperer le code
+        uses: actions/checkout@v7
+
+      - name: Installer Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Installer les dependances
+        run: pip install -r requirements-dev.txt
+
+      - name: Verifier le code avec Ruff
+        run: ruff check .
+
+      - name: Executer les tests
+        run: pytest -q --junitxml=reports/junit.xml
