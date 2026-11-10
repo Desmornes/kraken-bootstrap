@@ -11,4 +11,4 @@ jobs:
 
     steps:
       - name: Afficher le SHA du commit
-        run: echo "SHA du commit : ${{ github.sha }}"
+        run: 'echo "SHA du commit : ${{ github.sha }}"'
